@@ -3,12 +3,6 @@
 # Ensure packages are up to date.
 sudo pacman -Syu
 
-# Make the function keys on the keyboard default over media keys.
-# (This is currently specific to my keychron keyboard)
-FILE=/etc/modprobe.d/hid_apple.conf
-sudo touch $FILE
-sudo sh -c "echo 'options hid_apple fnmode=2' >> $FILE"
-
 # Essentials.
 sudo pacman -S git base-devel
 
@@ -25,10 +19,7 @@ sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 
 # Browser.
 # Keep firefox since some programs use it by default (for example cargo).
-sudo pamac install firefox brave-bin --no-confirm
-
-# Office.
-sudo pamac install onlyoffice-bin xournalpp --no-confirm
+sudo pamac install firefox --no-confirm
 
 # Some aesthetic stuff.
 sudo pamac install cmatrix bonsai.sh-git pipes.sh lolcat shell-color-scripts --no-confirm
@@ -37,10 +28,24 @@ sudo pamac install cmatrix bonsai.sh-git pipes.sh lolcat shell-color-scripts --n
 sudo pamac install nerd-fonts-jetbrains-mono --no-confirm
 
 # Manuals.
+# man-db база данных дл€ того, чтобы подт€гивать информацию о приложени€х, прикольна€ вещь, лучше чем -h
+# использовать так: man <им€ того, о чем хочешь узнать инфу>
 sudo pamac install man-db --no-confirm
 
 # Utilities.
-sudo pamac install scrot zathura zathura-pdf-mupdf-git cpu-x fuse-common powertop speedtest-cli gnome-calculator balena-etcher btop nvtop thunar lazygit flameshot brightnessctl pfetch bottom dunst --no-confirm
+# zathura - приложение дл€ просмотра pdf документов
+# cpu-x - аналог cpu-z
+# gnome-calculator - удобный калькул€тор
+# btop - то же что и htop, просто под него есть конфиг, поэтому не хочу убирать, чтоб потом ничего не поломолось
+# nvtop - дл€ мониторинга работы видеокарты
+# thunar - файловый менеджер, надеюсь, он там сразу кастомный будет
+# lazygit - программка дл€ работы с гитом, выгл€дит красиво, если настроить
+# flameshot - дл€ создание скриншотов (хз как запустить)
+# brightnessctl - необходима дл€ настройки €ркости, не пон€тно, насколько это необходимо 
+# bottom - красивые графики по нагрузке всего и вс€
+# dunst - уведомлени€
+# goverlay - приложение дл€ мониторинга системы во врем€ игр)))
+sudo pamac install zathura zathura-pdf-mupdf-git cpu-x fuse-common gnome-calculator btop nvtop thunar lazygit flameshot brightnessctl bottom dunst --no-confirm
 
 # Icons.
 sudo pamac install papirus-icon-theme --no-confirm
@@ -49,11 +54,13 @@ sudo pamac install papirus-icon-theme --no-confirm
 sudo pamac install lxappearance-gtk3 gruvbox-material-gtk-theme-git gtk-theme-material-black --no-confirm
 
 # Bootloader.
+
 sudo pamac install refind --no-confirm
 refind-install
 sudo chmod +x ~/.scripts/setup_refind.sh && ~/.scripts/setup_refind.sh
 
 # LY Login manager.
+# можно его использовать, а можно SDDM, на выбор, не удал€ю, потому что не знаю, нужен ли он вообще
 sudo pamac install ly --no-confirm
 
 # SDDM Login Manager
@@ -62,8 +69,8 @@ sudo systemctl disable display-manager && sudo systemctl enable sddm
 sudo touch /etc/sddm.conf
 sudo sh -c "echo '[Theme]' >> /etc/sddm.conf"
 sudo sh -c "echo 'Current=sugar-candy' >> /etc/sddm.conf"
-sudo cp ~/.wallpapers/mountain_jaws.jpg /usr/share/sddm/themes/sugar-candy/
-sudo mv /usr/share/sddm/themes/sugar-candy/mountain_jaws.jpg /usr/share/sddm/themes/sugar-candy/wall_secondary.png
+sudo cp ~/.wallpapers/Planets_Nord.jpg /usr/share/sddm/themes/sugar-candy/
+sudo mv /usr/share/sddm/themes/sugar-candy/Planets_Nord.jpg /usr/share/sddm/themes/sugar-candy/wall_secondary.png
 
 # Gnome stuff.
 sudo pamac install gnome-browser-connector gnome-tweaks --no-confirm
@@ -78,10 +85,10 @@ sudo pamac install alacritty --no-confirm
 
 # Coding stuff.
 sudo pamac install neovim ripgrep neovide xclip nvim-packer-git --no-confirm
-sudo pamac install nodejs github-desktop github-cli code --no-confirm
+sudo pamac install nodejs code --no-confirm
 
 # Communication.
-sudo pamac install thunderbird whatsapp-nativefier discord signal-desktop --no-confirm
+sudo pamac install telegram-desktop discord  --no-confirm
 
 # i3 stuff.
 sudo pamac install feh xborder-git cronie rofi rofi-greenclip picom --no-confirm
@@ -106,7 +113,7 @@ systemctl mask systemd-rfkill.socket
 sudo tlp start
 
 # Programming.
-sudo pamac install julia-bin emf-langserver cmake python --no-confirm
+sudo pamac install julia-bin emf-langserver cmake python go --no-confirm
 
 # Setup optimus manager.
 # NB: For Nvidia cards only!
@@ -120,18 +127,10 @@ sudo sh -c "echo 'startup_mode=nvidia' > /etc/optimus-manager/optimus-manager.co
 nvidia-force-composition-pipeline
 systemctl enable optimus-manager && systemctl start optimus-manager &
 
-# Enable SysRq keys.
-sudo touch /etc/sysctl.d/99-sysctl.conf
-sudo sh -c "echo 'kernel.sysrq=1' >> /etc/sysctl.d/99-sysctl.conf"
 
 # Install s-tui and set to run as admin.
 sudo pamac install s-tui --no-confirm
 
-# Add bnaries to sudoers.
-sudo sh -c "echo 'alex ALL = NOPASSWD: /usr/bin/s-tui, /usr/bin/pacman' > /etc/sudoers"
-
-# Setup github.
-sudo chmod +x ~/.scripts/setup_git.sh && sudo ~/.scripts/setup_git.sh
 
 # Install language servers.
 sudo chmod +x ~/.config/nvim/lua/alex/lang/lsp/install-servers.sh
@@ -143,8 +142,8 @@ sudo pamac install betterlockscreen-git --no-confirm
 # Should this script run every time the screens change?  Yeah.
 # betterlockscreen -u ~/.wallpapers/forest-mountain-cloudy-valley.png --blur 0.5
 # betterlockscreen -u ~/.wallpapers/misty_mountains.jpg --blur 0.5
-betterlockscreen -u ~/.wallpapers/mountain_jaws.jpg --blur 0.5
-betterlockscreen -u ~/.wallpapers/mountain_jaws.jpg
+betterlockscreen -u ~/.wallpapers/Planets_Nord.jpg --blur 0.5
+betterlockscreen -u ~/.wallpapers/Planets_Nord.jpg
 
 # Setup fish (shell).
 sudo pamac install fish --no-confirm
