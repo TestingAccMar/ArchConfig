@@ -20,10 +20,7 @@ sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf
 
 # Browser.
 # Keep firefox since some programs use it by default (for example cargo).
-sudo pamac install firefox brave-bin --no-confirm
-
-# Office.
-sudo pamac install onlyoffice-bin xournalpp --no-confirm
+sudo pamac install firefox  --no-confirm
 
 # Fonts.
 sudo pamac install nerd-fonts-jetbrains-mono --no-confirm
@@ -44,21 +41,28 @@ sudo pamac install polybar python-pywal pywal-git networkmanager-dmenu-git calc 
 # Install s-tui and set to run as admin.
 sudo pamac install s-tui --no-confirm
 
-# Add bnaries to sudoers.
-sudo sh -c "echo 'alex ALL = NOPASSWD: /usr/bin/s-tui, /usr/bin/pacman' > /etc/sudoers"
-
-# Enable SysRq keys.
-sudo touch /etc/sysctl.d/99-sysctl.conf
-sudo sh -c "echo 'kernel.sysrq=1' >> /etc/sysctl.d/99-sysctl.conf"
-
 # Manuals.
+# man-db база данных дл€ того, чтобы подт€гивать информацию о приложени€х, прикольна€ вещь, лучше чем -h
+# использовать так: man <им€ того, о чем хочешь узнать инфу>
 sudo pamac install man-db --no-confirm
 
 # Some aesthetic stuff.
 sudo pamac install cmatrix bonsai.sh-git pipes.sh lolcat shell-color-scripts --no-confirm
 
 # Utilities.
-sudo pamac install scrot zathura zathura-pdf-mupdf-git cpu-x fuse-common powertop speedtest-cli gnome-calculator balena-etcher btop nvtop thunar lazygit flameshot brightnessctl pfetch bottom dunst --no-confirm
+# zathura - приложение дл€ просмотра pdf документов
+# cpu-x - аналог cpu-z
+# gnome-calculator - удобный калькул€тор
+# btop - то же что и htop, просто под него есть конфиг, поэтому не хочу убирать, чтоб потом ничего не поломолось
+# nvtop - дл€ мониторинга работы видеокарты
+# thunar - файловый менеджер, надеюсь, он там сразу кастомный будет
+# lazygit - программка дл€ работы с гитом, выгл€дит красиво, если настроить
+# flameshot - дл€ создание скриншотов (хз как запустить)
+# brightnessctl - необходима дл€ настройки €ркости, не пон€тно, насколько это необходимо 
+# bottom - красивые графики по нагрузке всего и вс€
+# dunst - уведомлени€
+# goverlay - приложение дл€ мониторинга системы во врем€ игр)))
+sudo pamac install zathura zathura-pdf-mupdf-git cpu-x fuse-common gnome-calculator btop nvtop thunar lazygit flameshot brightnessctl bottom dunst --no-confirm
 
 # Icons.
 sudo pamac install papirus-icon-theme --no-confirm
@@ -80,5 +84,5 @@ sudo pamac install playerctl --no-confirm
 sudo pamac install betterlockscreen-git --no-confirm
 # Setup lock screen.
 # Should this script run every time the screens change?  Yeah.
-betterlockscreen -u ~/.wallpapers/National_Park_Nord.png --display 1
-betterlockscreen -u ~/.wallpapers/National_Park_Nord.png --blur 0.5 --display 1
+betterlockscreen -u ~/.wallpapers/Planets_Nord.png --display 1
+betterlockscreen -u ~/.wallpapers/Planets_Nord.png --blur 0.5 --display 1
